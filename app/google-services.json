@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "626956180644",
+    "firebase_url": "https://digibulletin-82246.firebaseio.com",
+    "project_id": "digibulletin-82246",
+    "storage_bucket": "digibulletin-82246.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626956180644:android:323f6f03d836c468",
+        "android_client_info": {
+          "package_name": "id.sch.smktelkom_mlg.project.xirpl207162534.digitalbulletin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626956180644-bvvqk1qqo0rg1bc6v0ob06pbmi8p49so.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-CqbyGHY7irHQ-aWUs7uYlfc53IqSP94"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
