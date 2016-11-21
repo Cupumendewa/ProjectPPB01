@@ -26,7 +26,8 @@ public class LandingActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),SignupActivity.class);
+                startActivity(i);
             }
         });
     }

@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
-                    Log.d("DigitalBulletin","Logged in as "+firebaseAuth.getCurrentUser().getEmail().toString());
-
+                    Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+                    startActivity(i);
+                    finish();
                 }else{
                     Log.d("DigitalBulletin","Logged Out");
                     Intent i = new Intent(getApplicationContext(),LandingActivity.class);
