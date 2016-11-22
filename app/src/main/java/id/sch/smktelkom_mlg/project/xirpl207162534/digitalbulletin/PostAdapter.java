@@ -32,22 +32,24 @@ public class PostAdapter extends ArrayAdapter<Post> {
         final Post post = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_channel, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_post, parent, false);
         }
         // Lookup view for data population
-        TextView postName = (TextView) convertView.findViewById(R.id.postName);
-        TextView postDate = (TextView) convertView.findViewById(R.id.postDate);
+        TextView tvTitle = (TextView) convertView.findViewById(R.id.postName);
+        TextView tvDate = (TextView) convertView.findViewById(R.id.postDate);
         // Populate the data into the template view using the data object
-        postName.setText(post.Title);
-        postDate.setText(post.Date);
-        LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.layoutN);
+        tvTitle.setText(post.Title);
+        tvDate.setText(post.Date);
+        LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.layoutP);
         ll.setTag(position);
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = (Integer) v.getTag();
                 ps = getItem(position);
-                Log.d("APP",ps.Title.toString());
+                Intent i = new Intent(getContext(),ChannelDetailActivity.class);
+                i.putExtra("id",ps.id);
+                getContext().startActivity(i);
             }
         });
 
