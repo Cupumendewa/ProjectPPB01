@@ -32,19 +32,17 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     ListView lv;
-    ArrayList<String> arraylist = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
-
+    ArrayList<Channel> arrayChannel = new ArrayList<Channel>();
+    ChannelAdapter adapter;
+    String name;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         lv = (ListView) findViewById(R.id.lview);
         em = (TextView) findViewById(R.id.viewEmail);
         mAuth = FirebaseAuth.getInstance();
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arraylist);
+        adapter = new ChannelAdapter(this,arrayChannel);
         lv.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,8 +78,9 @@ public class HomeActivity extends AppCompatActivity {
                             adapter.clear();
                             Toast.makeText(getApplicationContext(),"Currently Subscribed to "+ String.valueOf(dataSnapshot.getChildrenCount())+" Channels",Toast.LENGTH_SHORT).show();
                             for(DataSnapshot child : dataSnapshot.getChildren()){
-                                adapter.add(child.getValue().toString());
+                                adapter.add(new Channel(child.getValue().toString(),child.getKey()));
                             }
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
