@@ -20,6 +20,7 @@ public class LandingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -28,6 +29,7 @@ public class LandingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),SignupActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }

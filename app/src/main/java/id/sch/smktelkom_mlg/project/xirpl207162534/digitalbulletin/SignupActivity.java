@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText email,pass;
+    EditText email,pass, name;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class SignupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         email = (EditText) findViewById(R.id.supEmail);
         pass = (EditText) findViewById(R.id.supPassword);
+        name = (EditText) findViewById(R.id.etNama);
         Button sup = (Button) findViewById(R.id.sup);
         sup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +43,12 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseDatabase db = FirebaseDatabase.getInstance();
+                            // Email Set
                             DatabaseReference ref = db.getReference("users").child(mAuth.getCurrentUser().getUid()).child("email");
                             ref.setValue(mAuth.getCurrentUser().getEmail());
+                            // Name Set
+                            DatabaseReference refname = db.getReference("users").child(mAuth.getCurrentUser().getUid()).child("name");
+                            refname.setValue(name.getText().toString());
                             Toast.makeText(getApplicationContext(), "Welcome, " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(i);
