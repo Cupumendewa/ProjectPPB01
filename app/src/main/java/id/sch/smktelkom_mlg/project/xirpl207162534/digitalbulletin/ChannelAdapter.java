@@ -1,8 +1,10 @@
 package id.sch.smktelkom_mlg.project.xirpl207162534.digitalbulletin;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +20,11 @@ import java.util.ArrayList;
  */
 
 public class ChannelAdapter extends ArrayAdapter<Channel> {
+    public Channel ch;
     public ChannelAdapter(Context context, ArrayList<Channel> channel) {
         super(context, 0, channel);
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -40,8 +44,10 @@ public class ChannelAdapter extends ArrayAdapter<Channel> {
             @Override
             public void onClick(View v) {
                 int position = (Integer) v.getTag();
-                Channel ch = getItem(position);
-                Log.d("Press",ch.id.toString());
+                ch = getItem(position);
+                Intent i = new Intent(getContext(),ChannelDetailActivity.class);
+                i.putExtra("id",ch.id);
+                getContext().startActivity(i);
             }
         });
         ll.setOnLongClickListener(new View.OnLongClickListener() {
