@@ -3,6 +3,7 @@ package id.sch.smktelkom_mlg.project.xirpl207162534.digitalbulletin;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,14 +25,20 @@ public class ChannelDetailActivity extends AppCompatActivity {
         if(id == null){
             finish();
         }
+
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference dbChan = db.getReference("channels").child(id);
         dbChan.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                title.setText(dataSnapshot.child("name").getValue().toString());
-                desc.setText(dataSnapshot.child("description").getValue().toString());
-
+                try{
+                    title.setText(dataSnapshot.child("name").getValue().toString());
+                    desc.setText(dataSnapshot.child("description").getValue().toString());
+                    
+                }catch(Exception ex){
+                    finish();
+                    Toast.makeText(getApplicationContext(),"Channel has been removed from Server.",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -39,5 +46,6 @@ public class ChannelDetailActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }
