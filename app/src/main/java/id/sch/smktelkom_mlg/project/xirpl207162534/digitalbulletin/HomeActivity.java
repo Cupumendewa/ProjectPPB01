@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Snackbar sb = Snackbar.make(null,"Unable To Fetch Data. Check your Connection",Snackbar.LENGTH_SHORT);
+                            Snackbar sb = Snackbar.make(getWindow().getDecorView().getRootView(),"Unable To Fetch Data. Check your Connection",Snackbar.LENGTH_SHORT);
                             sb.setAction("Got It", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             adapter.clear();
-                            Toast.makeText(getApplicationContext(),"Currently Subscribed to "+ String.valueOf(dataSnapshot.getChildrenCount())+" Channels",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"Currently Subscribed to "+ String.valueOf(dataSnapshot.getChildrenCount())+" Channels",Toast.LENGTH_SHORT).show();
                             for(DataSnapshot child : dataSnapshot.getChildren()){
                                 adapter.add(new Channel(child.getValue().toString(),child.getKey()));
                             }

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -55,14 +63,22 @@ public class ChannelAdapter extends ArrayAdapter<Channel> {
             @Override
             public boolean onLongClick(View v) {
                 int position = (Integer) v.getTag();
-                Channel ch = getItem(position);
+                final Channel chs = getItem(position);
 
                 DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                Log.d("APP","Removed");
+                                FirebaseUser usr = FirebaseAuth.getInstance().getCurrentUser();
+                                FirebaseDatabase db = FirebaseDatabase.getInstance();
+                                DatabaseReference dbf = db.getReference("users").child(usr.getUid().toString()).child("subscribed").child(chs.id);
+                                dbf.removeValue(new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        Toast.makeText(getContext(),"Removed!",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
