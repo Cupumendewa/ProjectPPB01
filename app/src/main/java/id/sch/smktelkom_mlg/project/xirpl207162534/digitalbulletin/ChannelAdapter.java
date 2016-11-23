@@ -86,6 +86,7 @@ public class ChannelAdapter extends ArrayAdapter<Channel> {
                         }
                     }
                 };
+                ch = getItem(position);
                 AlertDialog.Builder prompt = new AlertDialog.Builder(getContext());
                 prompt.setMessage("Are you Sure want to delete " + ch.Name + " from your Subscribed List?").setPositiveButton("Yes",dialogClick).setNegativeButton("No",dialogClick).show();
                 return true;
