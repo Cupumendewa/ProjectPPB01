@@ -1,5 +1,6 @@
 package id.sch.smktelkom_mlg.project.xirpl207162534.digitalbulletin;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,6 +93,13 @@ public class ChannelDetailActivity extends AppCompatActivity {
 
             }
         });
-
+        adminFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),NewPostActivity.class);
+                startActivity(i);
+                
+            }
+        });
     }
 }
