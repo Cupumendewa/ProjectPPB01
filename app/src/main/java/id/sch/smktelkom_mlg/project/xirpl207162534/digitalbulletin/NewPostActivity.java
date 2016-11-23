@@ -20,8 +20,20 @@ public class NewPostActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                  post();
             }
         });
     }
+
+    private boolean valid(){
+        //TUGASE DIAZ IKI :V
+        return true;
+    }
+
+    private void post(){
+        if(valid()){
+
+        }
+    }
+
 }
