@@ -8,10 +8,11 @@ public class Post {
     public String id;
     public String Title;
     public String Date;
-
-    public Post(String id, String Title, String Date){
+    public String channel;
+    public Post(String channel, String id, String Title, String Date){
         this.Title = Title;
         this.id = id;
         this.Date = Date;
+        this.channel = channel;
     }
 }

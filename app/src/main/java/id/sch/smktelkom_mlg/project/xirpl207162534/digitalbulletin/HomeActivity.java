@@ -45,14 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         adapter = new ChannelAdapter(this,arrayChannel);
         lv.setAdapter(adapter);
-        fabHome = (FloatingActionButton) findViewById(R.id.fabHome);
 
-        fabHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                
-            }
-        });
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

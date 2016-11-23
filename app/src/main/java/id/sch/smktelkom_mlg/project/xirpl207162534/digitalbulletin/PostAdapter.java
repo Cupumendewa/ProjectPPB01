@@ -47,8 +47,10 @@ public class PostAdapter extends ArrayAdapter<Post> {
             public void onClick(View v) {
                 int position = (Integer) v.getTag();
                 ps = getItem(position);
-                Intent i = new Intent(getContext(),ChannelDetailActivity.class);
+                Intent i = new Intent(getContext(),PostDetailActivity.class);
+                i.putExtra("channel",ps.channel);
                 i.putExtra("id",ps.id);
+                i.putExtra("title",ps.Title);
                 getContext().startActivity(i);
             }
         });

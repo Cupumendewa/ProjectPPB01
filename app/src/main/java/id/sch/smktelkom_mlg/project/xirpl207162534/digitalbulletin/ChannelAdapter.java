@@ -37,6 +37,7 @@ public class ChannelAdapter extends ArrayAdapter<Channel> {
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         // Populate the data into the template view using the data object
+        Log.d("APP",channel.Name);
         tvName.setText(channel.Name);
         LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.layoutN);
         ll.setTag(position);
