@@ -34,7 +34,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    private boolean valid(){
+        if(email.getText().toString().equals(""))
+        {
+            email.setError("Email is Empty");
+            return false;
+        }
+        else if (pass.getText().toString().equals("")){
+            pass.setError("Password Is Empty");
+            return false;
+        }
+        else if (pass.getText().toString().length() < 6)
+        {
+            pass.setError("Password Must Consist More than 6 Characters");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     public void login(){
         if (valid()){
             mAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString())
@@ -54,23 +72,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean valid(){
-        if(email.getText().toString().equals(""))
-        {
-            email.setError("Email belum diisi");
-            return false;
-        }
-        else if (pass.getText().toString().equals("")){
-            pass.setError("Password Belum Diisi");
-            return false;
-        }
-        else if (pass.getText().toString().length() < 6)
-        {
-            pass.setError("Password Harus lebih dari 6");
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
+
 }
