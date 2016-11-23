@@ -34,26 +34,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void login(){
-        if (valid()){
-            mAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),"Welcome, "+mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(getApplicationContext(),HomeActivity.class);
-                                startActivity(i);
-                                finish();
-                            }else {
-                                Toast.makeText(getApplicationContext(),"Login Failed :(",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
-    }
-
     private boolean valid(){
         if(email.getText().toString().equals(""))
         {
@@ -73,4 +53,24 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+    public void login(){
+        if (valid()){
+            mAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getApplicationContext(),"Welcome, "+mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+                                startActivity(i);
+                                finish();
+                            }else {
+                                Toast.makeText(getApplicationContext(),"Login Failed :(",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+
 }
