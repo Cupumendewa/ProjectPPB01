@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelDetailActivity extends AppCompatActivity {
+    public static String lastpost;
     TextView title, desc;
     String id;
     ArrayList<Post> arrayPost = new ArrayList<Post>();
@@ -69,6 +70,7 @@ public class ChannelDetailActivity extends AppCompatActivity {
                     for(DataSnapshot postchild : dataSnapshot.child("posts").getChildren()){
                         Log.d("DATA OUTSIDE",String.valueOf(postchild.getChildrenCount()));
                             adapter.add(new Post(id,postchild.getKey().toString(),postchild.child("name").getValue().toString(),postchild.child("date").getValue().toString()));
+                            lastpost = postchild.getKey().toString();
                     }
                 }catch(Exception ex){
                     // They Don't have any posts?
@@ -97,8 +99,9 @@ public class ChannelDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),NewPostActivity.class);
+                i.putExtra("id",id);
                 startActivity(i);
-                
+
             }
         });
     }

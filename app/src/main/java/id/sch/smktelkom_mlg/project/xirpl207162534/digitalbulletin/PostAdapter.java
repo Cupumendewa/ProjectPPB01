@@ -12,6 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -21,6 +30,7 @@ import java.util.ArrayList;
 
 public class PostAdapter extends ArrayAdapter<Post> {
     public Post ps;
+    public boolean admin = false;
     public PostAdapter(Context context, ArrayList<Post> post) {
         super(context, 0, post);
     }
@@ -52,6 +62,63 @@ public class PostAdapter extends ArrayAdapter<Post> {
                 i.putExtra("id",ps.id);
                 i.putExtra("title",ps.Title);
                 getContext().startActivity(i);
+            }
+        });
+        ll.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View view) {
+                int position = (Integer) view.getTag();
+                final Post pos = getItem(position);
+                DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                FirebaseUser usr = FirebaseAuth.getInstance().getCurrentUser();
+                                FirebaseDatabase db = FirebaseDatabase.getInstance();
+                                DatabaseReference dbf = db.getReference("channels").child(pos.channel).child("posts").child(pos.id);
+                                dbf.removeValue(new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        Toast.makeText(getContext(),"Removed!",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder prompt = new AlertDialog.Builder(getContext());
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser mUser = mAuth.getCurrentUser();
+                final String userUID = mUser.getUid().toString();
+                FirebaseDatabase db = FirebaseDatabase.getInstance();
+                DatabaseReference df = db.getReference("channels").child(pos.channel).child("owner");
+                df.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue().equals(userUID)){
+                            admin = true;
+
+                        }else{
+                            admin = false;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                if(admin){
+                    prompt.setMessage("Are you Sure want to delete this Post?").setPositiveButton("Yes",dialogClick).setNegativeButton("No",dialogClick).show();
+                    return true;
+                }else{
+                    return false;
+                }
             }
         });
 

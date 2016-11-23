@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.data.DataBufferObserverSet;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +48,13 @@ public class NewPostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String pc = String.valueOf(dataSnapshot.getChildrenCount());
-                postcount = Integer.parseInt(pc);
+                if(ChannelDetailActivity.lastpost == null){
+                    postcount = 0;
+                }else{
+
+                    postcount = Integer.parseInt(ChannelDetailActivity.lastpost) + 1;
+                }
+                Log.d("APP",String.valueOf(postcount));
 
             }
 

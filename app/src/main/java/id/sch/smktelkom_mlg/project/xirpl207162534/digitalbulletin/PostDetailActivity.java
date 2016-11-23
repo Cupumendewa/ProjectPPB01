@@ -31,8 +31,9 @@ public class PostDetailActivity extends AppCompatActivity {
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tvcontent.setText(dataSnapshot.child("content").getValue().toString());
-                datepost.setText("Posted at " + dataSnapshot.child("date").getValue().toString());
+                try{tvcontent.setText(dataSnapshot.child("content").getValue().toString());
+                datepost.setText("Posted at " + dataSnapshot.child("date").getValue().toString());}
+                catch(Exception ex){}
             }
 
             @Override
