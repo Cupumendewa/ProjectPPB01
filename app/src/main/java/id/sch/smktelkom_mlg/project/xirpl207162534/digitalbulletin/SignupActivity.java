@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignupActivity extends AppCompatActivity {
     EditText email,pass, name;
     FirebaseAuth mAuth;
+    Button sup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +28,12 @@ public class SignupActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.supEmail);
         pass = (EditText) findViewById(R.id.supPassword);
         name = (EditText) findViewById(R.id.etNama);
-        Button sup = (Button) findViewById(R.id.sup);
+        sup = (Button) findViewById(R.id.sup);
         sup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sup.setEnabled(false);
+                sup.setText("Signing up...");
                 signup();
             }
         });

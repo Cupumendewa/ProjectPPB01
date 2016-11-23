@@ -18,11 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText email,pass;
-
+    Button submit;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button submit = (Button) findViewById(R.id.submitBtn);
+        submit = (Button) findViewById(R.id.submitBtn);
         email = (EditText) findViewById(R.id.emailBox);
         pass = (EditText) findViewById(R.id.passBox);
         mAuth = FirebaseAuth.getInstance();
@@ -30,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                submit.setEnabled(false);
+                submit.setText("Logging In...");
                 login();
             }
         });

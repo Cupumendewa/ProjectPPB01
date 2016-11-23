@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ChannelDetailActivity extends AppCompatActivity {
     public static String lastpost;
-    TextView title, desc;
+    TextView title, desc, invCode;
     String id;
     ArrayList<Post> arrayPost = new ArrayList<Post>();
     PostAdapter adapter;
@@ -34,6 +34,8 @@ public class ChannelDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_detail);
+        invCode = (TextView) findViewById(R.id.invCode);
+        invCode.setVisibility(View.GONE);
         title = (TextView) findViewById(R.id.chanName);
         desc = (TextView) findViewById(R.id.chanDesc);
         adapter = new PostAdapter(this,arrayPost);
@@ -84,6 +86,8 @@ public class ChannelDetailActivity extends AppCompatActivity {
                     Log.d("APP", "Current UID is " + currentUserUID.length());
                     if(ownerUID.equals(currentUserUID)){
                         adminFAB.setVisibility(View.VISIBLE);
+                        invCode.setVisibility(View.VISIBLE);
+                        invCode.setText("Channel ID : " + dataSnapshot.getKey().toString());
                     }
                 }catch(Exception ex){
 
