@@ -38,16 +38,16 @@ public class SignupActivity extends AppCompatActivity {
 
     private boolean valid() {
         if (name.getText().toString().equals("")) {
-            name.setError("Nama Harus Diisi");
+            name.setError("The Name is Empty");
             return false;
         } else if (email.getText().toString().equals("")) {
-            email.setError("Email belum diisi");
+            email.setError("Email Is Empty");
             return false;
         } else if (pass.getText().toString().equals("")) {
-            pass.setError("Password Belum Diisi");
+            pass.setError("Password Is Empty");
             return false;
         } else if (pass.getText().toString().length() < 6) {
-            pass.setError("Password Harus lebih dari 6");
+            pass.setError("Password Must Consist More Then 6 Characters");
             return false;
         } else {
             return true;

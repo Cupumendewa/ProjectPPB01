@@ -26,8 +26,18 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private boolean valid(){
-        //TUGASE DIAZ IKI :V
-        return true;
+        if(title.getText().toString().equals(""))
+        {
+            title.setError("Title is Empty");
+            return false;
+        }
+        else if (content.getText().toString().equals("")) {
+            content.setError("Content Is Empty");
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     private void post(){

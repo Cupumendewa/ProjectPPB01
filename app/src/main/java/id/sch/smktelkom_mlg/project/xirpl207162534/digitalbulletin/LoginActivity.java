@@ -37,16 +37,16 @@ public class LoginActivity extends AppCompatActivity {
     private boolean valid(){
         if(email.getText().toString().equals(""))
         {
-            email.setError("Email belum diisi");
+            email.setError("Email is Empty");
             return false;
         }
         else if (pass.getText().toString().equals("")){
-            pass.setError("Password Belum Diisi");
+            pass.setError("Password Is Empty");
             return false;
         }
         else if (pass.getText().toString().length() < 6)
         {
-            pass.setError("Password Harus lebih dari 6");
+            pass.setError("Password Must Consist More than 6 Characters");
             return false;
         }
         else{
