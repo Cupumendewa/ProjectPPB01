@@ -80,6 +80,7 @@ public class NewPostActivity extends AppCompatActivity {
             String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             dbref.child(String.valueOf(postcount)).child("date").setValue(currentDateTimeString);
             Toast.makeText(getApplicationContext(),"Post Success",Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
