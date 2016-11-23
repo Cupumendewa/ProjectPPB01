@@ -50,12 +50,31 @@ public class CreateOrInviteActivity extends AppCompatActivity {
     }
 
     private boolean createValid(){
-        //TUGASE DIAZ
-        return true;
+       if(newChannelId.getText().toString().equals("")){
+           newChannelId.setError("The Channel ID is Empty");
+           return false;
+       }
+        else if(newChannelName.getText().toString().equals("")){
+           newChannelName.setError("The Channel Name is Empty");
+           return false;
+       }
+        else if(newChannelDesc.getText().toString().equals("")){
+           newChannelDesc.setError("The Channel Description is Empty");
+           return false;
+       }
+        else{
+           return true;
+       }
     }
 
     private boolean joinValid(){
-        return true;
+        if(joinChannelId.getText().toString().equals("")){
+            joinChannelId.setError("The ID is Empty");
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     private void signup(){
