@@ -61,6 +61,7 @@ public class SignupActivity extends AppCompatActivity {
                     });
         }
     }
+    
     private boolean valid(){
         if(name.getText().toString().equals("")){
             name.setError("Nama Harus Diisi");
