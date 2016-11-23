@@ -86,7 +86,7 @@ public class CreateOrInviteActivity extends AppCompatActivity {
             DatabaseReference ddref = db.getReference("channels").child(newChannelId.getText().toString());
             ddref.child("owner").setValue(fUser.getUid().toString());
             ddref.child("name").setValue(newChannelName.getText().toString());
-            ddref.child("description").setValue(newChannelName.getText().toString());
+            ddref.child("description").setValue(newChannelDesc.getText().toString());
             DatabaseReference uref = db.getReference("users").child(fUser.getUid().toString()).child("subscribed").child(newChannelId.getText().toString());
             uref.setValue(newChannelName.getText().toString());
             Toast.makeText(getApplicationContext(),newChannelName.getText().toString()+ " has Been Created!",Toast.LENGTH_SHORT);
@@ -101,13 +101,19 @@ public class CreateOrInviteActivity extends AppCompatActivity {
             dbref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    try{FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseUser fUser = mAuth.getCurrentUser();
 
                     String name = dataSnapshot.child("name").getValue().toString();
                     FirebaseDatabase db = FirebaseDatabase.getInstance();
                     DatabaseReference dbref = db.getReference("users").child(fUser.getUid().toString()).child("subscribed");
                     dbref.child(joinChannelId.getText().toString()).setValue(name);
+                        Toast.makeText(getApplicationContext(),"Join Success!", Toast.LENGTH_SHORT).show();
+                    finish();}
+                    catch (Exception ex){
+                        Toast.makeText(getApplicationContext(),"Failed to Join!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
 
                 @Override
