@@ -20,8 +20,7 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".ChannelDetailActivity" />
-        <activity android:name=".PostDetailActivity" />
-        <activity android:name=".NewPostActivity"></activity>
+        <activity android:name=".PostDetailActivity"></activity>
     </application>
 
 </manifest>
