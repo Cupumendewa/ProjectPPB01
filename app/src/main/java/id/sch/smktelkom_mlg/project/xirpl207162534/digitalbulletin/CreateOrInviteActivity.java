@@ -5,6 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CreateOrInviteActivity extends AppCompatActivity {
     EditText newChannelName,newChannelId,newChannelDesc, joinChannelId;
@@ -27,16 +36,66 @@ public class CreateOrInviteActivity extends AppCompatActivity {
         createChannelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                signup();
             }
         });
 
         joinChannelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                join();
             }
         });
 
+    }
+
+    private boolean createValid(){
+        //TUGASE DIAZ
+        return true;
+    }
+
+    private boolean joinValid(){
+        return true;
+    }
+
+    private void signup(){
+        if(createValid()){
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser fUser = mAuth.getCurrentUser();
+
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference ddref = db.getReference("channels").child(newChannelId.getText().toString());
+            ddref.child("owner").setValue(fUser.getUid().toString());
+            ddref.child("name").setValue(newChannelName.getText().toString());
+            ddref.child("description").setValue(newChannelName.getText().toString());
+            DatabaseReference uref = db.getReference("users").child(fUser.getUid().toString()).child("subscribed").child(newChannelId.getText().toString());
+            uref.setValue(newChannelName.getText().toString());
+            Toast.makeText(getApplicationContext(),newChannelName.getText().toString()+ " has Been Created!",Toast.LENGTH_SHORT);
+            finish();
+        }
+    }
+
+    private void join(){
+        if(joinValid()){
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference dbref = db.getReference("channels").child(joinChannelId.getText().toString());
+            dbref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser fUser = mAuth.getCurrentUser();
+
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    DatabaseReference dbref = db.getReference("users").child(fUser.getUid().toString()).child("subscribed");
+                    dbref.child(joinChannelId.getText().toString()).setValue(name);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 }
