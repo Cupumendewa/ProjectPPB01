@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,10 +16,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class NewPostActivity extends AppCompatActivity {
     EditText title, content;
     Button submit;
     String id;
+    public FirebaseDatabase db;
+    public DatabaseReference dbref;
+    public int postcount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +39,21 @@ public class NewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                   post();
+            }
+        });
+        db = FirebaseDatabase.getInstance();
+        dbref = db.getReference("channels").child(id).child("posts");
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String pc = String.valueOf(dataSnapshot.getChildrenCount());
+                postcount = Integer.parseInt(pc);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -53,20 +75,11 @@ public class NewPostActivity extends AppCompatActivity {
 
     private void post(){
         if(valid()){
-            int postcount;
-            FirebaseDatabase db = FirebaseDatabase.getInstance();
-            DatabaseReference dbref = db.getReference("channels").child(id).child("posts");
-            dbref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.d("APP",String.valueOf(dataSnapshot.getChildrenCount()));
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+            dbref.child(String.valueOf(postcount)).child("name").setValue(title.getText().toString());
+            dbref.child(String.valueOf(postcount)).child("content").setValue(content.getText().toString());
+            String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+            dbref.child(String.valueOf(postcount)).child("date").setValue(currentDateTimeString);
+            Toast.makeText(getApplicationContext(),"Post Success",Toast.LENGTH_SHORT).show();
         }
     }
 
