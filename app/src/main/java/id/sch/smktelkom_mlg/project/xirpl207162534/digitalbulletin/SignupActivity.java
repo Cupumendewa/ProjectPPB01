@@ -37,27 +37,29 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup(){
-        mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseDatabase db = FirebaseDatabase.getInstance();
-                            // Email Set
-                            DatabaseReference ref = db.getReference("users").child(mAuth.getCurrentUser().getUid()).child("email");
-                            ref.setValue(mAuth.getCurrentUser().getEmail());
-                            // Name Set
-                            DatabaseReference refname = db.getReference("users").child(mAuth.getCurrentUser().getUid()).child("name");
-                            refname.setValue(name.getText().toString());
-                            Toast.makeText(getApplicationContext(), "Welcome, " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(i);
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Failed to Signup :(", Toast.LENGTH_SHORT).show();
+        if(valid()){
+            mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseDatabase db = FirebaseDatabase.getInstance();
+                                // Email Set
+                                DatabaseReference ref = db.getReference("users").child(mAuth.getCurrentUser().getUid()).child("email");
+                                ref.setValue(mAuth.getCurrentUser().getEmail());
+                                // Name Set
+                                DatabaseReference refname = db.getReference("users").child(mAuth.getCurrentUser().getUid()).child("name");
+                                refname.setValue(name.getText().toString());
+                                Toast.makeText(getApplicationContext(), "Welcome, " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Failed to Signup :(", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
     private boolean valid(){
         if(email.getText().toString().equals(""))
