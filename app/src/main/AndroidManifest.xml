@@ -21,7 +21,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".ChannelDetailActivity" />
         <activity android:name=".PostDetailActivity" />
-        <activity android:name=".NewPostActivity"></activity>
+        <activity android:name=".NewPostActivity" />
+        <activity android:name=".CreateOrInviteActivity"></activity>
     </application>
 
 </manifest>
