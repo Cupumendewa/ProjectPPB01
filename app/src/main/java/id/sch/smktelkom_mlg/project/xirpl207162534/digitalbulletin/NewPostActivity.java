@@ -65,6 +65,7 @@ public class NewPostActivity extends AppCompatActivity {
         });
     }
 
+    
     private boolean valid(){
         if(title.getText().toString().equals(""))
         {
